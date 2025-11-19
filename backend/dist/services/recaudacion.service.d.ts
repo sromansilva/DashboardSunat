@@ -22,9 +22,7 @@ export declare const getRecaudacionById: (id: number) => Prisma.Prisma__Recaudac
     regimen: string;
     monto: Prisma.Decimal;
     creadoEl: Date;
-} | null, null, import("@prisma/client/runtime/library").DefaultArgs, {
-    log: ("error" | "warn")[];
-}>;
+} | null, null, import("@prisma/client/runtime/library").DefaultArgs, Prisma.PrismaClientOptions>;
 export declare const createRecaudacion: (data: Prisma.RecaudacionCreateInput) => Prisma.Prisma__RecaudacionClient<{
     id: number;
     periodo: string;
@@ -33,9 +31,7 @@ export declare const createRecaudacion: (data: Prisma.RecaudacionCreateInput) =>
     regimen: string;
     monto: Prisma.Decimal;
     creadoEl: Date;
-}, never, import("@prisma/client/runtime/library").DefaultArgs, {
-    log: ("error" | "warn")[];
-}>;
+}, never, import("@prisma/client/runtime/library").DefaultArgs, Prisma.PrismaClientOptions>;
 export declare const updateRecaudacion: (id: number, data: Prisma.RecaudacionUpdateInput) => Prisma.Prisma__RecaudacionClient<{
     id: number;
     periodo: string;
@@ -44,9 +40,7 @@ export declare const updateRecaudacion: (id: number, data: Prisma.RecaudacionUpd
     regimen: string;
     monto: Prisma.Decimal;
     creadoEl: Date;
-}, never, import("@prisma/client/runtime/library").DefaultArgs, {
-    log: ("error" | "warn")[];
-}>;
+}, never, import("@prisma/client/runtime/library").DefaultArgs, Prisma.PrismaClientOptions>;
 export declare const deleteRecaudacion: (id: number) => Prisma.Prisma__RecaudacionClient<{
     id: number;
     periodo: string;
@@ -55,7 +49,5 @@ export declare const deleteRecaudacion: (id: number) => Prisma.Prisma__Recaudaci
     regimen: string;
     monto: Prisma.Decimal;
     creadoEl: Date;
-}, never, import("@prisma/client/runtime/library").DefaultArgs, {
-    log: ("error" | "warn")[];
-}>;
+}, never, import("@prisma/client/runtime/library").DefaultArgs, Prisma.PrismaClientOptions>;
 //# sourceMappingURL=recaudacion.service.d.ts.map

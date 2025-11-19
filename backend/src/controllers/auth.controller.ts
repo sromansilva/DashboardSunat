@@ -13,7 +13,10 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const login = asyncHandler(async (req: Request, res: Response) => {
-  const { user, tokens } = await loginUser(req.body.email, req.body.password);
+  // Acepta 'email' pero puede ser email o username
+  const emailOrUsername = req.body.email || req.body.username;
+  const { user, tokens } = await loginUser(emailOrUsername, req.body.password);
+  logger.info(`Usuario ${user.email} inició sesión`);
   return sendSuccess(res, { user, tokens }, 'Login exitoso');
 });
 

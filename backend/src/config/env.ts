@@ -6,7 +6,13 @@ config();
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   PORT: z.string().default('4000'),
-  DATABASE_URL: z.string().url(),
+  DATABASE_URL: z
+    .string()
+    .url()
+    .refine(
+      (url) => url.includes('sslmode=require') || url.includes('sslmode=prefer'),
+      { message: 'DATABASE_URL debe incluir sslmode=require o sslmode=prefer para Neon' }
+    ),
   JWT_ACCESS_TOKEN_SECRET: z.string().min(32),
   JWT_REFRESH_TOKEN_SECRET: z.string().min(32),
   ACCESS_TOKEN_EXPIRES_IN: z.string().default('15m'),

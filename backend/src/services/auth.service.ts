@@ -36,8 +36,16 @@ export const registerUser = async (input: RegisterInput) => {
   return sanitizeUser(user);
 };
 
-export const loginUser = async (email: string, password: string) => {
-  const user = await prisma.user.findUnique({ where: { email } });
+export const loginUser = async (emailOrUsername: string, password: string) => {
+  // Intentar buscar por email primero, luego por username
+  const user = await prisma.user.findFirst({
+    where: {
+      OR: [
+        { email: emailOrUsername },
+        { username: emailOrUsername },
+      ],
+    },
+  });
 
   if (!user) {
     throw new AppError('Credenciales inválidas', 401);

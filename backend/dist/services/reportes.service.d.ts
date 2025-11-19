@@ -8,37 +8,35 @@ interface ReporteInput {
 }
 export declare const createReporte: (input: ReporteInput, generadoPorId?: number) => Promise<{
     reporte: {
-        createdAt: Date;
         id: number;
+        createdAt: Date;
         tipo: string;
         periodoInicio: Date;
         periodoFin: Date;
         formato: string;
-        metadata: Prisma.JsonValue | null;
         generadoPorId: number | null;
+        metadata: Prisma.JsonValue | null;
     };
     exportUrl: string;
 }>;
 export declare const getReporteById: (id: number) => Prisma.Prisma__ReportClient<({
     generadoPor: {
-        role: import("@prisma/client").$Enums.UserRole;
+        id: number;
         username: string;
         passwordHash: string;
         email: string;
+        role: import("@prisma/client").$Enums.UserRole;
         createdAt: Date;
-        id: number;
     } | null;
 } & {
-    createdAt: Date;
     id: number;
+    createdAt: Date;
     tipo: string;
     periodoInicio: Date;
     periodoFin: Date;
     formato: string;
-    metadata: Prisma.JsonValue | null;
     generadoPorId: number | null;
-}) | null, null, import("@prisma/client/runtime/library").DefaultArgs, {
-    log: ("error" | "warn")[];
-}>;
+    metadata: Prisma.JsonValue | null;
+}) | null, null, import("@prisma/client/runtime/library").DefaultArgs, Prisma.PrismaClientOptions>;
 export {};
 //# sourceMappingURL=reportes.service.d.ts.map

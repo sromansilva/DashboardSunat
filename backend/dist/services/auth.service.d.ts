@@ -12,7 +12,7 @@ export declare const registerUser: (input: RegisterInput) => Promise<{
     role: import("@prisma/client").$Enums.UserRole;
     createdAt: Date;
 }>;
-export declare const loginUser: (email: string, password: string) => Promise<{
+export declare const loginUser: (emailOrUsername: string, password: string) => Promise<{
     user: {
         id: number;
         username: string;

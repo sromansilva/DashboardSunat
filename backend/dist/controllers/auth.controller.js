@@ -15,7 +15,10 @@ exports.register = (0, asyncHandler_1.default)(async (req, res) => {
     return (0, response_1.sendSuccess)(res, user, 'Usuario registrado', 201);
 });
 exports.login = (0, asyncHandler_1.default)(async (req, res) => {
-    const { user, tokens } = await (0, auth_service_1.loginUser)(req.body.email, req.body.password);
+    // Acepta 'email' pero puede ser email o username
+    const emailOrUsername = req.body.email || req.body.username;
+    const { user, tokens } = await (0, auth_service_1.loginUser)(emailOrUsername, req.body.password);
+    logger_1.default.info(`Usuario ${user.email} inició sesión`);
     return (0, response_1.sendSuccess)(res, { user, tokens }, 'Login exitoso');
 });
 exports.refresh = (0, asyncHandler_1.default)(async (req, res) => {

@@ -9,14 +9,14 @@ export declare const listDeclaraciones: () => Prisma.PrismaPromise<({
         historialJson: Prisma.JsonValue;
     };
 } & {
-    createdAt: Date;
     id: number;
-    periodo: string;
+    createdAt: Date;
     tipo: string;
+    periodo: string;
     estado: string;
     inconsistenciasJson: Prisma.JsonValue;
-    updatedAt: Date;
     contribuyenteId: number;
+    updatedAt: Date;
 })[]>;
 export declare const getDeclaracionById: (id: number) => Prisma.Prisma__DeclaracionClient<({
     contribuyente: {
@@ -28,51 +28,43 @@ export declare const getDeclaracionById: (id: number) => Prisma.Prisma__Declarac
         historialJson: Prisma.JsonValue;
     };
 } & {
-    createdAt: Date;
     id: number;
-    periodo: string;
+    createdAt: Date;
     tipo: string;
+    periodo: string;
     estado: string;
     inconsistenciasJson: Prisma.JsonValue;
-    updatedAt: Date;
     contribuyenteId: number;
-}) | null, null, import("@prisma/client/runtime/library").DefaultArgs, {
-    log: ("error" | "warn")[];
-}>;
+    updatedAt: Date;
+}) | null, null, import("@prisma/client/runtime/library").DefaultArgs, Prisma.PrismaClientOptions>;
 export declare const createDeclaracion: (data: Prisma.DeclaracionUncheckedCreateInput) => Prisma.Prisma__DeclaracionClient<{
-    createdAt: Date;
     id: number;
-    periodo: string;
+    createdAt: Date;
     tipo: string;
+    periodo: string;
     estado: string;
     inconsistenciasJson: Prisma.JsonValue;
-    updatedAt: Date;
     contribuyenteId: number;
-}, never, import("@prisma/client/runtime/library").DefaultArgs, {
-    log: ("error" | "warn")[];
-}>;
+    updatedAt: Date;
+}, never, import("@prisma/client/runtime/library").DefaultArgs, Prisma.PrismaClientOptions>;
 export declare const updateDeclaracion: (id: number, data: Prisma.DeclaracionUncheckedUpdateInput) => Prisma.Prisma__DeclaracionClient<{
-    createdAt: Date;
     id: number;
-    periodo: string;
+    createdAt: Date;
     tipo: string;
+    periodo: string;
     estado: string;
     inconsistenciasJson: Prisma.JsonValue;
-    updatedAt: Date;
     contribuyenteId: number;
-}, never, import("@prisma/client/runtime/library").DefaultArgs, {
-    log: ("error" | "warn")[];
-}>;
+    updatedAt: Date;
+}, never, import("@prisma/client/runtime/library").DefaultArgs, Prisma.PrismaClientOptions>;
 export declare const deleteDeclaracion: (id: number) => Prisma.Prisma__DeclaracionClient<{
-    createdAt: Date;
     id: number;
-    periodo: string;
+    createdAt: Date;
     tipo: string;
+    periodo: string;
     estado: string;
     inconsistenciasJson: Prisma.JsonValue;
-    updatedAt: Date;
     contribuyenteId: number;
-}, never, import("@prisma/client/runtime/library").DefaultArgs, {
-    log: ("error" | "warn")[];
-}>;
+    updatedAt: Date;
+}, never, import("@prisma/client/runtime/library").DefaultArgs, Prisma.PrismaClientOptions>;
 //# sourceMappingURL=declaraciones.service.d.ts.map

@@ -3,7 +3,8 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { Lock, User } from 'lucide-react';
+import { Lock, User, AlertCircle } from 'lucide-react';
+import { api, ApiError } from '../services/api';
 
 interface LoginPageProps {
   onLogin: () => void;
@@ -12,10 +13,51 @@ interface LoginPageProps {
 export default function LoginPage({ onLogin }: LoginPageProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin();
+    setError(null);
+    setLoading(true);
+
+    try {
+      // El backend ahora acepta email o username
+      const response = await api.post<{
+        success: boolean;
+        data: {
+          user: { id: number; username: string; email: string; role: string };
+          tokens: { accessToken: string; refreshToken: string };
+        };
+      }>('/auth/login', { email: username, password }, { skipAuth: true });
+
+      if (response.success && response.data) {
+        localStorage.setItem('accessToken', response.data.tokens.accessToken);
+        localStorage.setItem('refreshToken', response.data.tokens.refreshToken);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        onLogin();
+      } else {
+        setError('Error al iniciar sesión. Intenta nuevamente.');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      if (err instanceof ApiError) {
+        // Mensajes más específicos según el error
+        if (err.status === 401) {
+          setError('Credenciales inválidas. Verifica tu usuario y contraseña.');
+        } else if (err.status === 0) {
+          setError('Error de conexión. Verifica que el backend esté corriendo en http://localhost:4000');
+        } else if (err.status === 400) {
+          setError(err.message || 'Datos inválidos. Verifica el formato de tus credenciales.');
+        } else {
+          setError(err.message || 'Error al iniciar sesión. Intenta nuevamente.');
+        }
+      } else {
+        setError('Error inesperado. Verifica la consola para más detalles.');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -50,14 +92,14 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
             <Label htmlFor="username" className="text-gray-700">
-              Usuario
+              Usuario o Email
             </Label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <Input
                 id="username"
                 type="text"
-                placeholder="Ingrese su usuario"
+                placeholder="Ingrese su usuario o email"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="pl-10"
@@ -94,11 +136,19 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             </a>
           </div>
 
+          {error && (
+            <div className="flex items-center gap-2 text-red-600 text-sm bg-red-50 p-3 rounded-md">
+              <AlertCircle className="w-4 h-4" />
+              <span>{error}</span>
+            </div>
+          )}
+
           <Button
             type="submit"
-            className="w-full bg-[#003876] hover:bg-[#002654] text-white py-6"
+            disabled={loading}
+            className="w-full bg-[#003876] hover:bg-[#002654] text-white py-6 disabled:opacity-50"
           >
-            Iniciar Sesión
+            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
           </Button>
         </form>
 
