@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  admin
+  analista
+  supervisor
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  username     String    @unique
+  passwordHash String    @map("password_hash")
+  email        String    @unique
+  role         UserRole  @default(analista)
+  createdAt    DateTime  @default(now()) @map("created_at")
+  reports      Report[]  @relation("UserReports")
+}
+
+model Recaudacion {
+  id                Int      @id @default(autoincrement())
+  periodo           String
+  departamento      String
+  tipoContribuyente String  @map("tipo_contribuyente")
+  regimen           String
+  monto             Decimal  @db.Decimal(18, 2)
+  creadoEl          DateTime @default(now()) @map("creado_el")
+}
+
+model Fiscalizacion {
+  id            Int      @id @default(autoincrement())
+  sector        String
+  riesgo        String
+  estado        String
+  descripcion   String
+  fechaRegistro DateTime @default(now()) @map("fecha_registro")
+}
+
+model Contribuyente {
+  id                  Int             @id @default(autoincrement())
+  ruc                 String          @unique
+  nombre              String
+  estado              String
+  actividadEconomica  String          @map("actividad_economica")
+  historialJson       Json            @map("historial_json")
+  declaraciones       Declaracion[]
+}
+
+model Declaracion {
+  id                  Int        @id @default(autoincrement())
+  tipo                String
+  periodo             String
+  estado              String
+  inconsistenciasJson Json       @map("inconsistencias_json")
+  contribuyenteId     Int        @map("contribuyente_id")
+  contribuyente       Contribuyente @relation(fields: [contribuyenteId], references: [id])
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+}
+
+model Report {
+  id           Int      @id @default(autoincrement())
+  tipo         String
+  periodoInicio DateTime @map("periodo_inicio")
+  periodoFin    DateTime @map("periodo_fin")
+  formato       String
+  generadoPorId Int?     @map("generado_por")
+  generadoPor   User?    @relation("UserReports", fields: [generadoPorId], references: [id])
+  createdAt     DateTime @default(now())
+  metadata      Json?
+}
+

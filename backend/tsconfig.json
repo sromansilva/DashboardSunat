@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    // Carpetas de entrada y salida
+    "rootDir": "./src",
+    "outDir": "./dist",
+    
+    // Entorno y módulos
+    "target": "es2019",
+    "module": "Node16",
+    "moduleResolution": "node16",
+    "lib": ["es2019", "dom"],
+
+    // Tipos globales
+    "types": ["node", "react", "react-dom"],
+
+    // Interoperabilidad
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+
+    // Mapas y declaraciones
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Comprobación estricta
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+
+    // Otros
+    "forceConsistentCasingInFileNames": true,
+    "noEmitOnError": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
