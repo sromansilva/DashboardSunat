@@ -189,19 +189,8 @@ pipeline {
                             
                             # Verificar conexión a la base de datos (sin aplicar migraciones)
                             echo "Testing database connection..."
-                            node -e "
-                                const { PrismaClient } = require('@prisma/client');
-                                const prisma = new PrismaClient();
-                                prisma.\$queryRaw\`SELECT 1\`
-                                    .then(() => {
-                                        console.log('✅ Database connection successful');
-                                        return prisma.\$disconnect();
-                                    })
-                                    .catch((err) => {
-                                        console.error('❌ Database connection failed:', err.message);
-                                        process.exit(1);
-                                    });
-                            "
+                            # Usar Prisma.$executeRaw con string simple para evitar problemas con backticks en Groovy
+                            node -e 'const {PrismaClient} = require("@prisma/client"); const p = new PrismaClient(); p.$executeRaw("SELECT 1").then(() => {console.log("✅ Database connection successful"); return p.$disconnect();}).catch((e) => {console.error("❌ Database connection failed:", e.message); process.exit(1);});'
                         '''
                     }
                 }
